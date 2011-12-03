@@ -24,7 +24,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.icefaces.eclipse.library.oss.component.ice/jst.icefaces">
+	<classpathentry exported="true" kind="con" path="org.icefaces.eclipse.library.oss.component.ice/jst.icefaces">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
