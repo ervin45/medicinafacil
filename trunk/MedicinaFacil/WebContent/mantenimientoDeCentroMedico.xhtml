@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:icecore="http://www.icefaces.org/icefaces/core"
+	xmlns:ace="http://www.icefaces.org/icefaces/components"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+<h:head>
+	<title>ICEfaces 2</title>
+	<link rel="stylesheet" type="text/css"
+		href="./xmlhttp/css/rime/rime.css" />
+</h:head>
+
+<h:body styleClass="ice-skin-rime">
+	<h:form id="form">
+		<h1><h:outputText value="Mantenimiento de Centro Medico"/></h1>
+        <h2><h:outputText value="Complete el siguiente formulario" style="color:blue"/></h2>
+		<h:panelGrid style="width:800;">
+			<h:panelGrid width="100%" columns="2" styleClass="topPad10">
+				<ice:outputText style="font-weight: bolder" value="Nombre: " />
+				<ice:inputText value="#{agregarCentroMedico.centroMedico.nombre}"
+					style="width:175px; margin-left:100px" />
+				<ice:outputText style="font-weight: bolder" value="Telefono: " />
+				<ice:inputText value="#{agregarCentroMedico.centroMedico.telefono}"
+					style="width:175px; margin-left:100px" />
+				<ice:outputText style="font-weight: bolder" value="Logo: " />
+				<ice:inputFile autoUpload="false" 
+                       				   progressListener="#{agregarCentroMedico.fileUploadProgress}"
+                       				   actionListener="#{agregarCentroMedico.uploadFile}"
+                       				   submitOnUpload="postUpload"
+                                       uniqueFolder="true"/> 
+				        <ice:outputProgress value="#{agregarCentroMedico.fileProgress}" />
+				<ice:outputText style="font-weight: bolder" value="Descripcion: " />
+				<ice:inputRichText value="#{agregarCentroMedico.centroMedico.descripcion}" stye="basic"/>
+				
+				<h:panelGrid width="100%">
+					<ice:messages layout="table" for="doctorForm"
+						errorClass="errorMsg" infoClass="confirmMsg" warnClass="infoMsg" />
+				</h:panelGrid>
+				<ice:panelGroup>
+					<h:panelGroup style="float: left">
+						<ice:outputConnectionStatus />
+					</h:panelGroup>
+					<h:panelGrid style="float: right;" columns="2" cellpadding="10px">
+						<ice:panelGroup>
+							<ice:commandButton value="Agregar" />				
+						</ice:panelGroup>
+						<ice:panelGroup >
+							<ice:commandButton value="Limpiar Campos" />
+						</ice:panelGroup>
+					</h:panelGrid>
+				</ice:panelGroup>
+			</h:panelGrid>
+			
+		</h:panelGrid>
+	</h:form>
+</h:body>
+
+</html>
