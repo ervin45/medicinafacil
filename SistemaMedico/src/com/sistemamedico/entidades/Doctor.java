@@ -8,6 +8,22 @@ public class Doctor {
 	private String celular;
 	private String cedula;
 	private String especialidad;
+	private String usuario;
+	private String clave;
+	
+	public Doctor(String nombre, String apellido, String telefono,
+			String celular, String cedula, String especialidad, String usuario,
+			String clave) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.telefono = telefono;
+		this.celular = celular;
+		this.cedula = cedula;
+		this.especialidad = especialidad;
+		this.usuario = usuario;
+		this.clave = clave;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -56,4 +72,22 @@ public class Doctor {
 	public void setEspecialidad(String especialidad) {
 		this.especialidad = especialidad;
 	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getClave() {
+		return clave;
+	}
+
+	public void setClave(String clave) {
+		this.clave = clave;
+	}
+
+	
 }
