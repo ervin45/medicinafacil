@@ -1,28 +1,28 @@
 package com.sistemamedico.entidades;
 
-public class Doctor {
+import com.sistemamedico.interfaz.IEntidad;
 
+public class Doctor implements IEntidad {
+
+	private int id;
 	private String nombre;
 	private String apellido;
 	private String telefono;
 	private String celular;
 	private String cedula;
+	private String direccion;
 	private String especialidad;
+	private String status;
+	private String role;
 	private String usuario;
 	private String clave;
-	
-	public Doctor(String nombre, String apellido, String telefono,
-			String celular, String cedula, String especialidad, String usuario,
-			String clave) {
-		super();
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.telefono = telefono;
-		this.celular = celular;
-		this.cedula = cedula;
-		this.especialidad = especialidad;
-		this.usuario = usuario;
-		this.clave = clave;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNombre() {
@@ -65,12 +65,36 @@ public class Doctor {
 		this.cedula = cedula;
 	}
 
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
 	public String getEspecialidad() {
 		return especialidad;
 	}
 
 	public void setEspecialidad(String especialidad) {
 		this.especialidad = especialidad;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getUsuario() {
@@ -89,5 +113,4 @@ public class Doctor {
 		this.clave = clave;
 	}
 
-	
 }
