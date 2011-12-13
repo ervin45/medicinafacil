@@ -1,6 +1,8 @@
 package com.sistemamedico.entidades;
 
-public class Paciente {
+import com.sistemamedico.interfaz.IEntidad;
+
+public class Paciente implements IEntidad {
 
 	private String nombre;
 	private String apellido;
@@ -9,18 +11,6 @@ public class Paciente {
 	private String cedula;
 	private String usuario;
 	private String clave;
-
-	public Paciente(String nombre, String apellido, String telefono,
-			String celular, String cedula, String usuario, String clave) {
-		super();
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.telefono = telefono;
-		this.celular = celular;
-		this.cedula = cedula;
-		this.usuario = usuario;
-		this.clave = clave;
-	}
 
 	public String getNombre() {
 		return nombre;
