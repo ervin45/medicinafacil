@@ -6,16 +6,15 @@ import java.awt.Rectangle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-import java.awt.GridBagLayout;
-import javax.swing.JComboBox;
-import javax.swing.JTextArea;
 
 public class FormularioPaciente extends JFrame {
 
