@@ -69,7 +69,7 @@ public class FormularioPaciente extends JFrame {
 	private void initialize() {
 		this.setSize(544, 555);
 		this.setContentPane(getJContentPane());
-		this.setTitle("Formulario Doctor");
+		this.setTitle("Formulario Paciente");
 	}
 
 	/**
