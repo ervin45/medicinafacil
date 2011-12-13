@@ -14,7 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-public class FormularioDoctor extends JFrame {
+public class FormularioVerDoctor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
@@ -43,7 +43,7 @@ public class FormularioDoctor extends JFrame {
 	/**
 	 * This is the default constructor
 	 */
-	public FormularioDoctor() {
+	public FormularioVerDoctor() {
 		super();
 		initialize();
 	}
@@ -111,7 +111,7 @@ public class FormularioDoctor extends JFrame {
 			panelDoctor.setLayout(null);
 			panelDoctor.setBounds(new Rectangle(0, 1, 524, 548));
 			panelDoctor.setFont(new Font("Dialog", Font.PLAIN, 14));
-			panelDoctor.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), "Agregar Doctor", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), new Color(51, 51, 51)));
+			panelDoctor.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), "Datos del Doctor", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), new Color(51, 51, 51)));
 			panelDoctor.add(lblNombreDoctor, null);
 			panelDoctor.add(getTxtNombreDoctor(), null);
 			panelDoctor.add(lblApellido, null);
