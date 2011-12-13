@@ -1,25 +1,22 @@
 package com.sistemamedico.ui.receta;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import javax.swing.BorderFactory;
 import java.awt.Color;
-import javax.swing.border.TitledBorder;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.util.Date;
 
-import javax.swing.JTextField;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import com.toedter.calendar.JCalendar;
-import javax.swing.JTextArea;
 
 public class EditarRecetaMedica extends JFrame {
 
@@ -75,9 +72,9 @@ public class EditarRecetaMedica extends JFrame {
 	}
 
 	/**
-	 * This method initializes panelConsulta	
-	 * 	
-	 * @return javax.swing.JPanel	
+	 * This method initializes panelConsulta
+	 * 
+	 * @return javax.swing.JPanel
 	 */
 	private JPanel getPanelConsulta() {
 		if (panelConsulta == null) {
@@ -96,7 +93,11 @@ public class EditarRecetaMedica extends JFrame {
 			panelConsulta = new JPanel();
 			panelConsulta.setLayout(null);
 			panelConsulta.setBounds(new Rectangle(4, 4, 513, 439));
-			panelConsulta.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), "Datos de la Consulta", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), new Color(51, 51, 51)));
+			panelConsulta.setBorder(BorderFactory.createTitledBorder(
+					BorderFactory.createLineBorder(Color.black, 1),
+					"Datos de la Consulta", TitledBorder.DEFAULT_JUSTIFICATION,
+					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
+							Font.BOLD, 12), new Color(51, 51, 51)));
 			panelConsulta.add(lblDoctor, null);
 			panelConsulta.add(getTxtNombreDoctor(), null);
 			panelConsulta.add(getBtnBuscarDoctor(), null);
@@ -115,22 +116,23 @@ public class EditarRecetaMedica extends JFrame {
 	}
 
 	/**
-	 * This method initializes txtNombreDoctor	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes txtNombreDoctor
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getTxtNombreDoctor() {
 		if (txtNombreDoctor == null) {
 			txtNombreDoctor = new JTextField();
+			txtNombreDoctor.setEnabled(false);
 			txtNombreDoctor.setBounds(new Rectangle(156, 39, 234, 26));
 		}
 		return txtNombreDoctor;
 	}
 
 	/**
-	 * This method initializes btnBuscarDoctor	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes btnBuscarDoctor
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getBtnBuscarDoctor() {
 		if (btnBuscarDoctor == null) {
@@ -142,22 +144,23 @@ public class EditarRecetaMedica extends JFrame {
 	}
 
 	/**
-	 * This method initializes txtNombrePaciente	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes txtNombrePaciente
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getTxtNombrePaciente() {
 		if (txtNombrePaciente == null) {
 			txtNombrePaciente = new JTextField();
+			txtNombrePaciente.setEnabled(false);
 			txtNombrePaciente.setBounds(new Rectangle(156, 93, 234, 26));
 		}
 		return txtNombrePaciente;
 	}
 
 	/**
-	 * This method initializes btnBuscarPaciente	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes btnBuscarPaciente
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getBtnBuscarPaciente() {
 		if (btnBuscarPaciente == null) {
@@ -169,9 +172,9 @@ public class EditarRecetaMedica extends JFrame {
 	}
 
 	/**
-	 * This method initializes txtFecha	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes txtFecha
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getTxtFecha() {
 		if (txtFecha == null) {
@@ -183,9 +186,9 @@ public class EditarRecetaMedica extends JFrame {
 	}
 
 	/**
-	 * This method initializes btnFecha	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes btnFecha
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getBtnFecha() {
 		if (btnFecha == null) {
@@ -196,15 +199,14 @@ public class EditarRecetaMedica extends JFrame {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("llegue");
 					fecha = seleccionarFecha();
-					txtFecha.setText((fecha.getYear() + 1900)
-					+ "-"+ (fecha.getMonth() + 1)
-					+ "-" + fecha.getDate());
+					txtFecha.setText((fecha.getYear() + 1900) + "-"
+							+ (fecha.getMonth() + 1) + "-" + fecha.getDate());
 				}
 			});
 		}
 		return btnFecha;
 	}
-	
+
 	private Date seleccionarFecha() {
 		JCalendar calendar = new JCalendar();
 		JDialog dialogo = new JDialog();
@@ -218,37 +220,62 @@ public class EditarRecetaMedica extends JFrame {
 	}
 
 	/**
-	 * This method initializes txtDescripcion	
-	 * 	
-	 * @return javax.swing.JTextArea	
+	 * This method initializes txtDescripcion
+	 * 
+	 * @return javax.swing.JTextArea
 	 */
 	private JTextArea getTxtDescripcion() {
 		if (txtDescripcion == null) {
 			txtDescripcion = new JTextArea();
-			txtDescripcion.setBorder(BorderFactory.createLineBorder(Color.black,1));
+			txtDescripcion.setBorder(BorderFactory.createLineBorder(
+					Color.black, 1));
 			txtDescripcion.setBounds(new Rectangle(156, 203, 310, 155));
 		}
 		return txtDescripcion;
 	}
 
 	/**
-	 * This method initializes btnAceptar	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes btnAceptar
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getBtnAceptar() {
 		if (btnAceptar == null) {
 			btnAceptar = new JButton();
 			btnAceptar.setBounds(new Rectangle(132, 392, 115, 28));
 			btnAceptar.setText("Aceptar");
+			btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					if(validarCampos()){
+						System.out.println("validado");
+					}
+																// Auto-generated
+																// Event stub
+																// actionPerformed()
+				}
+			});
 		}
 		return btnAceptar;
 	}
 
+	public boolean validarCampos(){
+		boolean validado = true;
+		
+		if(txtNombreDoctor.getText().equals("")
+		   ||txtNombrePaciente.getText().equals("")
+		   ||txtFecha.getText().equals("")
+		   ||txtDescripcion.getText().equals("")){
+			validado = false;
+			JOptionPane.showMessageDialog(null, "Faltan Campos por llenar");
+		}
+		
+		return validado;
+	}
+
 	/**
-	 * This method initializes btnCancelar	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes btnCancelar
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getBtnCancelar() {
 		if (btnCancelar == null) {
@@ -259,4 +286,4 @@ public class EditarRecetaMedica extends JFrame {
 		return btnCancelar;
 	}
 
-}  //  @jve:decl-index=0:visual-constraint="10,10"
+} // @jve:decl-index=0:visual-constraint="10,10"

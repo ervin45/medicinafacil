@@ -3,18 +3,22 @@ package com.sistemamedico.ui.paciente;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.text.ParseException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 public class FormularioEditarPaciente extends JFrame {
 
@@ -176,7 +180,13 @@ public class FormularioEditarPaciente extends JFrame {
 	 */
 	private JTextField getTxtTelefono() {
 		if (txtTelefono == null) {
-			txtTelefono = new JTextField();
+			try {
+				txtTelefono = new JFormattedTextField(new MaskFormatter(
+						"###-###-####"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			txtTelefono.setBounds(new Rectangle(144, 135, 182, 25));
 		}
 		return txtTelefono;
@@ -189,7 +199,13 @@ public class FormularioEditarPaciente extends JFrame {
 	 */
 	private JTextField getTxtCelular() {
 		if (txtCelular == null) {
-			txtCelular = new JTextField();
+			try {
+				txtCelular = new JFormattedTextField(new MaskFormatter(
+						"###-###-####"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			txtCelular.setBounds(new Rectangle(144, 181, 182, 25));
 		}
 		return txtCelular;
@@ -202,7 +218,13 @@ public class FormularioEditarPaciente extends JFrame {
 	 */
 	private JTextField getTxtCedula() {
 		if (txtCedula == null) {
-			txtCedula = new JTextField();
+			try {
+				txtCedula = new JFormattedTextField(new MaskFormatter(
+						"###-#######-#"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			txtCedula.setBounds(new Rectangle(144, 226, 182, 25));
 		}
 		return txtCedula;
@@ -257,6 +279,13 @@ public class FormularioEditarPaciente extends JFrame {
 			btnAceptar = new JButton();
 			btnAceptar.setBounds(new Rectangle(115, 433, 91, 26));
 			btnAceptar.setText("Aceptar");
+			btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					if(validarTexto()&&validarClave()){
+						System.out.println("Validado");
+					}
+				}
+			});
 		}
 		return btnAceptar;
 	}
@@ -337,7 +366,8 @@ public class FormularioEditarPaciente extends JFrame {
 	 */
 	private JComboBox getCmbTipoSangre() {
 		if (cmbTipoSangre == null) {
-			cmbTipoSangre = new JComboBox();
+			String [] opciones = {"Seleccionar","A", "A+", "A-", "B", "B+","B-", "O+","O-"};
+			cmbTipoSangre = new JComboBox(opciones);
 			cmbTipoSangre.setBounds(new Rectangle(183, 44, 182, 25));
 		}
 		return cmbTipoSangre;
@@ -391,10 +421,47 @@ public class FormularioEditarPaciente extends JFrame {
 	 */
 	private JTextField getTxtTelefonoContacto() {
 		if (txtTelefonoContacto == null) {
-			txtTelefonoContacto = new JTextField();
+			try {
+				txtTelefonoContacto = new JFormattedTextField(new MaskFormatter(
+						"###-###-####"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			txtTelefonoContacto.setBounds(new Rectangle(185, 412, 188, 26));
 		}
 		return txtTelefonoContacto;
+	}
+	
+	public boolean validarTexto() {
+		boolean validado = true;
+		if (txtNombreDoctor.getText().trim().equals("")
+				|| txtApellido.getText().trim().equals("")
+				|| txtTelefono.getText().trim().equals("")
+				|| txtCelular.getText().trim().equals("")
+				|| txtCedula.getText().equals("")
+				|| txtUsuario.getText().trim().equals("")
+				|| txtClave.getText().trim().equals("")
+				|| txtConfirmarClave.getText().trim().equals("")
+				|| txtAlergias.getText().trim().equals("")
+				|| txtCirujias.getText().equals("")
+				|| txtNombreContacto.getText().equals("")
+				|| txtTelefonoContacto.getText().equals("")
+				|| cmbTipoSangre.getSelectedItem().equals("Seleccionar")) {
+			validado = false;
+			JOptionPane.showMessageDialog(null, "Faltan Campos por llenar");
+		}
+		return validado;
+	}
+	
+	public boolean validarClave(){
+		boolean validado = true;
+		
+		if(!txtClave.getText().trim().equals(txtConfirmarClave.getText().trim())){
+			validado = false;
+			JOptionPane.showMessageDialog(null, "Confirme su clave");
+		}
+		return validado;
 	}
 
 	/**

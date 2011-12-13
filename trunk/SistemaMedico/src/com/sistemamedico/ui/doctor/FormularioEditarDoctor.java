@@ -3,16 +3,20 @@ package com.sistemamedico.ui.doctor;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.text.ParseException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 public class FormularioEditarDoctor extends JFrame {
 
@@ -74,9 +78,9 @@ public class FormularioEditarDoctor extends JFrame {
 	}
 
 	/**
-	 * This method initializes panelDoctor	
-	 * 	
-	 * @return javax.swing.JPanel	
+	 * This method initializes panelDoctor
+	 * 
+	 * @return javax.swing.JPanel
 	 */
 	private JPanel getPanelDoctor() {
 		if (panelDoctor == null) {
@@ -111,7 +115,11 @@ public class FormularioEditarDoctor extends JFrame {
 			panelDoctor.setLayout(null);
 			panelDoctor.setBounds(new Rectangle(0, 1, 524, 548));
 			panelDoctor.setFont(new Font("Dialog", Font.PLAIN, 14));
-			panelDoctor.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), "Modificar Doctor", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), new Color(51, 51, 51)));
+			panelDoctor.setBorder(BorderFactory.createTitledBorder(
+					BorderFactory.createLineBorder(Color.black, 1),
+					"Agregar Doctor", TitledBorder.DEFAULT_JUSTIFICATION,
+					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
+							Font.BOLD, 12), new Color(51, 51, 51)));
 			panelDoctor.add(lblNombreDoctor, null);
 			panelDoctor.add(getTxtNombreDoctor(), null);
 			panelDoctor.add(lblApellido, null);
@@ -137,9 +145,9 @@ public class FormularioEditarDoctor extends JFrame {
 	}
 
 	/**
-	 * This method initializes txtNombreDoctor	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes txtNombreDoctor
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getTxtNombreDoctor() {
 		if (txtNombreDoctor == null) {
@@ -150,9 +158,9 @@ public class FormularioEditarDoctor extends JFrame {
 	}
 
 	/**
-	 * This method initializes txtApellido	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes txtApellido
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getTxtApellido() {
 		if (txtApellido == null) {
@@ -163,61 +171,81 @@ public class FormularioEditarDoctor extends JFrame {
 	}
 
 	/**
-	 * This method initializes txtTelefono	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes txtTelefono
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getTxtTelefono() {
 		if (txtTelefono == null) {
-			txtTelefono = new JTextField();
+			try {
+				txtTelefono = new JFormattedTextField(new MaskFormatter(
+						"###-###-####"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			txtTelefono.setBounds(new Rectangle(144, 135, 182, 25));
 		}
 		return txtTelefono;
 	}
 
 	/**
-	 * This method initializes txtCelular	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes txtCelular
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getTxtCelular() {
 		if (txtCelular == null) {
-			txtCelular = new JTextField();
+			try {
+				txtCelular = new JFormattedTextField(new MaskFormatter(
+						"###-###-####"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			txtCelular.setBounds(new Rectangle(144, 181, 182, 25));
 		}
 		return txtCelular;
 	}
 
 	/**
-	 * This method initializes txtCedula	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes txtCedula
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getTxtCedula() {
 		if (txtCedula == null) {
-			txtCedula = new JTextField();
+			try {
+				txtCedula = new JFormattedTextField(new MaskFormatter(
+						"###-#######-#"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			txtCedula.setBounds(new Rectangle(144, 226, 182, 25));
 		}
 		return txtCedula;
 	}
 
 	/**
-	 * This method initializes cmbEspecialidad	
-	 * 	
-	 * @return javax.swing.JComboBox	
+	 * This method initializes cmbEspecialidad
+	 * 
+	 * @return javax.swing.JComboBox
 	 */
 	private JComboBox getCmbEspecialidad() {
 		if (cmbEspecialidad == null) {
-			cmbEspecialidad = new JComboBox();
+			String[] opciones = { "Seleccionar", "Medico General", "Pediatra",
+					"Gastroenterologo", "Oftalmologo" };
+			cmbEspecialidad = new JComboBox(opciones);
 			cmbEspecialidad.setBounds(new Rectangle(144, 271, 182, 25));
 		}
 		return cmbEspecialidad;
 	}
 
 	/**
-	 * This method initializes txtUsuario	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes txtUsuario
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getTxtUsuario() {
 		if (txtUsuario == null) {
@@ -228,9 +256,9 @@ public class FormularioEditarDoctor extends JFrame {
 	}
 
 	/**
-	 * This method initializes txtClave	
-	 * 	
-	 * @return javax.swing.JPasswordField	
+	 * This method initializes txtClave
+	 * 
+	 * @return javax.swing.JPasswordField
 	 */
 	private JPasswordField getTxtClave() {
 		if (txtClave == null) {
@@ -241,9 +269,9 @@ public class FormularioEditarDoctor extends JFrame {
 	}
 
 	/**
-	 * This method initializes txtConfirmarClave	
-	 * 	
-	 * @return javax.swing.JPasswordField	
+	 * This method initializes txtConfirmarClave
+	 * 
+	 * @return javax.swing.JPasswordField
 	 */
 	private JPasswordField getTxtConfirmarClave() {
 		if (txtConfirmarClave == null) {
@@ -254,23 +282,30 @@ public class FormularioEditarDoctor extends JFrame {
 	}
 
 	/**
-	 * This method initializes btnAceptar	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes btnAceptar
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getBtnAceptar() {
 		if (btnAceptar == null) {
 			btnAceptar = new JButton();
 			btnAceptar.setBounds(new Rectangle(117, 481, 91, 26));
 			btnAceptar.setText("Aceptar");
+			btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					if (validarTexto()&& validarClave()) {
+						System.out.println("valode");
+					} 
+				}
+			});
 		}
 		return btnAceptar;
 	}
 
 	/**
-	 * This method initializes btnCancelar	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes btnCancelar
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getBtnCancelar() {
 		if (btnCancelar == null) {
@@ -281,4 +316,31 @@ public class FormularioEditarDoctor extends JFrame {
 		return btnCancelar;
 	}
 
-}  //  @jve:decl-index=0:visual-constraint="10,-2"
+	public boolean validarTexto() {
+		boolean validado = true;
+		if (txtNombreDoctor.getText().trim().equals("")
+				|| txtApellido.getText().trim().equals("")
+				|| txtTelefono.getText().trim().equals("")
+				|| txtCelular.getText().trim().equals("")
+				|| txtCedula.getText().equals("")
+				|| txtUsuario.getText().trim().equals("")
+				|| txtClave.getText().trim().equals("")
+				|| txtConfirmarClave.getText().trim().equals("")
+				|| cmbEspecialidad.getSelectedItem().equals("Seleccionar")) {
+			validado = false;
+			JOptionPane.showMessageDialog(null, "Faltan Campos por llenar");
+		}
+		return validado;
+	}
+	
+	public boolean validarClave(){
+		boolean validado = true;
+		
+		if(!txtClave.getText().trim().equals(txtConfirmarClave.getText().trim())){
+			validado = false;
+			JOptionPane.showMessageDialog(null, "Confirme su clave");
+		}
+		return validado;
+	}
+
+} // @jve:decl-index=0:visual-constraint="10,-2"
