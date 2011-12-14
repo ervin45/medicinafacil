@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.text.ParseException;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -17,33 +18,41 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
+import javax.swing.JTextArea;
+
+import com.sistemamedico.entidades.Doctor;
+import com.sistemamedico.manejadores.ManejadorDoctor;
+import com.sistemamedico.modelo.ModeloDoctor;
 
 public class FormularioEditarDoctor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
 	private JPanel panelDoctor = null;
+	private JComboBox cmbEspecialidad = null;
+	private JPanel panelDatosGenerales = null; // @jve:decl-index=0:visual-constraint="578,482"
+	private JLabel lblDireccion = null;
+	private JFormattedTextField txtCedula = null;
+	private JLabel jLabel = null;
+	private JLabel lblApellido = null;
 	private JLabel lblNombreDoctor = null;
 	private JTextField txtNombreDoctor = null;
-	private JLabel lblApellido = null;
 	private JTextField txtApellido = null;
-	private JLabel lblTelefono = null;
-	private JTextField txtTelefono = null;
 	private JLabel lblCelular = null;
-	private JTextField txtCelular = null;
-	private JLabel jLabel = null;
-	private JTextField txtCedula = null;
 	private JLabel lblEspecialidad = null;
-	private JComboBox cmbEspecialidad = null;
+	private JFormattedTextField txtCelular = null;
+	private JFormattedTextField txtTelefono = null;
+	private JLabel lblTelefono = null;
+	private JTextArea txtDireccion = null;
+	private JPanel panelSeguridad = null;
 	private JLabel lblUsuario = null;
 	private JTextField txtUsuario = null;
+	private JPasswordField txtClave = null;
 	private JLabel lblClave = null;
 	private JLabel lblConfirmar = null;
-	private JPasswordField txtClave = null;
 	private JPasswordField txtConfirmarClave = null;
 	private JButton btnAceptar = null;
 	private JButton btnCancelar = null;
-
 	/**
 	 * This is the default constructor
 	 */
@@ -58,8 +67,9 @@ public class FormularioEditarDoctor extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(550, 585);
+		this.setSize(543, 637);
 		this.setContentPane(getJContentPane());
+		this.llenarCampos(PanelDoctor.getIdDoctor());
 		this.setTitle("Formulario Doctor");
 	}
 
@@ -73,8 +83,57 @@ public class FormularioEditarDoctor extends JFrame {
 			jContentPane = new JPanel();
 			jContentPane.setLayout(null);
 			jContentPane.add(getPanelDoctor(), null);
+			jContentPane.add(getBtnAceptar(), null);
+			jContentPane.add(getBtnCancelar(), null);
+			jContentPane.add(getBtnAceptar(), null);
+			jContentPane.add(getBtnCancelar(), null);
+			
 		}
 		return jContentPane;
+	}
+
+	@SuppressWarnings("deprecation")
+	public boolean validarTexto() {
+		boolean validado = true;
+		if (txtNombreDoctor.getText().trim().equals("")
+				|| txtApellido.getText().trim().equals("")
+				|| txtTelefono.getText().trim().equals("")
+				|| txtCelular.getText().trim().equals("")
+				|| txtCedula.getText().equals("")
+				|| txtUsuario.getText().trim().equals("")
+				|| txtClave.getText().trim().equals("")
+				|| txtConfirmarClave.getText().trim().equals("")
+				|| txtDireccion.getText().trim().equals("")
+				|| cmbEspecialidad.getSelectedItem().equals("Seleccionar")) {
+			validado = false;
+
+		}
+		return validado;
+	}
+	
+	public void limpiarCampos(){
+		txtNombreDoctor.setText("");
+		txtApellido.setText("");
+		txtTelefono.setText("");
+		txtCelular.setText("");
+		txtCedula.setText("");
+		cmbEspecialidad.setSelectedIndex(0);
+		txtDireccion.setText("");
+		txtUsuario.setText("");
+		txtClave.setText("");
+		txtConfirmarClave.setText("");
+	}
+
+	@SuppressWarnings("deprecation")
+	public boolean validarClave() {
+		boolean validado = true;
+
+		if (!txtClave.getText().trim().equals(
+				txtConfirmarClave.getText().trim())) {
+			validado = false;
+			JOptionPane.showMessageDialog(null, "Confirme su clave");
+		}
+		return validado;
 	}
 
 	/**
@@ -85,146 +144,46 @@ public class FormularioEditarDoctor extends JFrame {
 	private JPanel getPanelDoctor() {
 		if (panelDoctor == null) {
 			lblConfirmar = new JLabel();
-			lblConfirmar.setBounds(new Rectangle(30, 407, 98, 22));
 			lblConfirmar.setText("Confirmar Clave:");
+			lblConfirmar.setBounds(new Rectangle(19, 102, 98, 27));
 			lblClave = new JLabel();
-			lblClave.setBounds(new Rectangle(30, 361, 82, 22));
 			lblClave.setText("Clave:");
+			lblClave.setBounds(new Rectangle(19, 66, 53, 27));
 			lblUsuario = new JLabel();
-			lblUsuario.setBounds(new Rectangle(30, 317, 82, 22));
 			lblUsuario.setText("Usuario:");
+			lblUsuario.setBounds(new Rectangle(19, 31, 62, 27));
 			lblEspecialidad = new JLabel();
-			lblEspecialidad.setBounds(new Rectangle(30, 271, 82, 22));
 			lblEspecialidad.setText("Especialidad:");
+			lblEspecialidad.setBounds(new Rectangle(245, 104, 82, 22));
 			jLabel = new JLabel();
-			jLabel.setBounds(new Rectangle(29, 226, 63, 22));
 			jLabel.setText("Cedula:");
+			jLabel.setBounds(new Rectangle(16, 104, 63, 25));
 			lblCelular = new JLabel();
-			lblCelular.setBounds(new Rectangle(29, 181, 63, 22));
 			lblCelular.setText("Celular:");
+			lblCelular.setBounds(new Rectangle(257, 68, 63, 25));
 			lblTelefono = new JLabel();
-			lblTelefono.setBounds(new Rectangle(29, 135, 63, 22));
 			lblTelefono.setText("Telefono:");
+			lblTelefono.setBounds(new Rectangle(257, 34, 63, 25));
 			lblApellido = new JLabel();
-			lblApellido.setBounds(new Rectangle(29, 91, 63, 22));
 			lblApellido.setText("Apellido:");
+			lblApellido.setBounds(new Rectangle(16, 68, 63, 25));
 			lblNombreDoctor = new JLabel();
-			lblNombreDoctor.setBounds(new Rectangle(29, 44, 63, 22));
 			lblNombreDoctor.setText("Nombre:");
+			lblNombreDoctor.setBounds(new Rectangle(16, 34, 63, 25));
 			panelDoctor = new JPanel();
 			panelDoctor.setLayout(null);
-			panelDoctor.setBounds(new Rectangle(0, 1, 524, 548));
+			panelDoctor.setBounds(new Rectangle(7, 10, 514, 540));
 			panelDoctor.setFont(new Font("Dialog", Font.PLAIN, 14));
 			panelDoctor.setBorder(BorderFactory.createTitledBorder(
 					BorderFactory.createLineBorder(Color.black, 1),
-					"Agregar Doctor", TitledBorder.DEFAULT_JUSTIFICATION,
+					"Formulario Doctor", TitledBorder.DEFAULT_JUSTIFICATION,
 					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
 							Font.BOLD, 12), new Color(51, 51, 51)));
-			panelDoctor.add(lblNombreDoctor, null);
-			panelDoctor.add(getTxtNombreDoctor(), null);
-			panelDoctor.add(lblApellido, null);
-			panelDoctor.add(getTxtApellido(), null);
-			panelDoctor.add(lblTelefono, null);
-			panelDoctor.add(getTxtTelefono(), null);
-			panelDoctor.add(lblCelular, null);
-			panelDoctor.add(getTxtCelular(), null);
-			panelDoctor.add(jLabel, null);
-			panelDoctor.add(getTxtCedula(), null);
-			panelDoctor.add(lblEspecialidad, null);
 			panelDoctor.add(getCmbEspecialidad(), null);
-			panelDoctor.add(lblUsuario, null);
-			panelDoctor.add(getTxtUsuario(), null);
-			panelDoctor.add(lblClave, null);
-			panelDoctor.add(lblConfirmar, null);
-			panelDoctor.add(getTxtClave(), null);
-			panelDoctor.add(getTxtConfirmarClave(), null);
-			panelDoctor.add(getBtnAceptar(), null);
-			panelDoctor.add(getBtnCancelar(), null);
+			panelDoctor.add(getPanelDatosGenerales(), null);
+			panelDoctor.add(getPanelSeguridad(), null);
 		}
 		return panelDoctor;
-	}
-
-	/**
-	 * This method initializes txtNombreDoctor
-	 * 
-	 * @return javax.swing.JTextField
-	 */
-	private JTextField getTxtNombreDoctor() {
-		if (txtNombreDoctor == null) {
-			txtNombreDoctor = new JTextField();
-			txtNombreDoctor.setBounds(new Rectangle(144, 44, 273, 25));
-		}
-		return txtNombreDoctor;
-	}
-
-	/**
-	 * This method initializes txtApellido
-	 * 
-	 * @return javax.swing.JTextField
-	 */
-	private JTextField getTxtApellido() {
-		if (txtApellido == null) {
-			txtApellido = new JTextField();
-			txtApellido.setBounds(new Rectangle(144, 91, 273, 25));
-		}
-		return txtApellido;
-	}
-
-	/**
-	 * This method initializes txtTelefono
-	 * 
-	 * @return javax.swing.JTextField
-	 */
-	private JTextField getTxtTelefono() {
-		if (txtTelefono == null) {
-			try {
-				txtTelefono = new JFormattedTextField(new MaskFormatter(
-						"###-###-####"));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			txtTelefono.setBounds(new Rectangle(144, 135, 182, 25));
-		}
-		return txtTelefono;
-	}
-
-	/**
-	 * This method initializes txtCelular
-	 * 
-	 * @return javax.swing.JTextField
-	 */
-	private JTextField getTxtCelular() {
-		if (txtCelular == null) {
-			try {
-				txtCelular = new JFormattedTextField(new MaskFormatter(
-						"###-###-####"));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			txtCelular.setBounds(new Rectangle(144, 181, 182, 25));
-		}
-		return txtCelular;
-	}
-
-	/**
-	 * This method initializes txtCedula
-	 * 
-	 * @return javax.swing.JTextField
-	 */
-	private JTextField getTxtCedula() {
-		if (txtCedula == null) {
-			try {
-				txtCedula = new JFormattedTextField(new MaskFormatter(
-						"###-#######-#"));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			txtCedula.setBounds(new Rectangle(144, 226, 182, 25));
-		}
-		return txtCedula;
 	}
 
 	/**
@@ -237,9 +196,206 @@ public class FormularioEditarDoctor extends JFrame {
 			String[] opciones = { "Seleccionar", "Medico General", "Pediatra",
 					"Gastroenterologo", "Oftalmologo" };
 			cmbEspecialidad = new JComboBox(opciones);
-			cmbEspecialidad.setBounds(new Rectangle(144, 271, 182, 25));
+			cmbEspecialidad.setBounds(new Rectangle(323, 105, 145, 22));
 		}
 		return cmbEspecialidad;
+	}
+
+	/**
+	 * This method initializes panelDatosGenerales
+	 * 
+	 * @return javax.swing.JPanel
+	 */
+	private JPanel getPanelDatosGenerales() {
+		if (panelDatosGenerales == null) {
+			lblTelefono = new JLabel();
+			lblTelefono.setBounds(new Rectangle(257, 34, 63, 25));
+			lblTelefono.setText("Telefono:");
+			lblEspecialidad = new JLabel();
+			lblEspecialidad.setBounds(new Rectangle(245, 104, 82, 22));
+			lblEspecialidad.setText("Especialidad:");
+			lblCelular = new JLabel();
+			lblCelular.setBounds(new Rectangle(257, 68, 63, 25));
+			lblCelular.setText("Celular:");
+			lblNombreDoctor = new JLabel();
+			lblNombreDoctor.setBounds(new Rectangle(16, 34, 63, 25));
+			lblNombreDoctor.setText("Nombre:");
+			lblApellido = new JLabel();
+			lblApellido.setBounds(new Rectangle(16, 68, 63, 25));
+			lblApellido.setText("Apellido:");
+			jLabel = new JLabel();
+			jLabel.setBounds(new Rectangle(16, 104, 63, 25));
+			jLabel.setText("Cedula:");
+			lblDireccion = new JLabel();
+			lblDireccion.setBounds(new Rectangle(16, 150, 63, 25));
+			lblDireccion.setText("Direccion:");
+			panelDatosGenerales = new JPanel();
+			panelDatosGenerales.setLayout(null);
+			panelDatosGenerales.setBounds(new Rectangle(13, 26, 484, 319));
+			panelDatosGenerales.setBorder(BorderFactory.createTitledBorder(
+					BorderFactory.createLineBorder(Color.black, 1),
+					"Datos Generales", TitledBorder.DEFAULT_JUSTIFICATION,
+					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
+							Font.BOLD, 12), Color.black));
+			panelDatosGenerales.add(lblDireccion, null);
+			panelDatosGenerales.add(getTxtCedula(), null);
+			panelDatosGenerales.add(jLabel, null);
+			panelDatosGenerales.add(lblApellido, null);
+			panelDatosGenerales.add(lblNombreDoctor, null);
+			panelDatosGenerales.add(getTxtNombreDoctor(), null);
+			panelDatosGenerales.add(getTxtApellido(), null);
+			panelDatosGenerales.add(lblCelular, null);
+			panelDatosGenerales.add(lblEspecialidad, null);
+			panelDatosGenerales.add(getTxtCelular(), null);
+			panelDatosGenerales.add(getTxtTelefono(), null);
+			panelDatosGenerales.add(lblTelefono, null);
+			panelDatosGenerales.add(getCmbEspecialidad(), null);
+			panelDatosGenerales.add(getTxtDireccion(), null);
+		}
+		return panelDatosGenerales;
+	}
+
+	/**
+	 * This method initializes txtCedula
+	 * 
+	 * @return javax.swing.JFormattedTextField
+	 */
+	private JFormattedTextField getTxtCedula() {
+		if (txtCedula == null) {
+			try {
+				txtCedula = new JFormattedTextField(new MaskFormatter(
+						"###-#######-#"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			txtCedula.setBounds(new Rectangle(89, 104, 145, 25));
+			txtCedula.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		}
+		return txtCedula;
+	}
+
+	/**
+	 * This method initializes txtNombreDoctor
+	 * 
+	 * @return javax.swing.JTextField
+	 */
+	private JTextField getTxtNombreDoctor() {
+		if (txtNombreDoctor == null) {
+			txtNombreDoctor = new JTextField();
+			txtNombreDoctor.setBounds(new Rectangle(89, 34, 145, 25));
+			txtNombreDoctor.setBorder(BorderFactory.createLineBorder(
+					Color.black, 1));
+		}
+		return txtNombreDoctor;
+	}
+
+	/**
+	 * This method initializes txtApellido
+	 * 
+	 * @return javax.swing.JTextField
+	 */
+	private JTextField getTxtApellido() {
+		if (txtApellido == null) {
+			txtApellido = new JTextField();
+			txtApellido.setBounds(new Rectangle(89, 68, 145, 25));
+			txtApellido.setBorder(BorderFactory
+					.createLineBorder(Color.black, 1));
+		}
+		return txtApellido;
+	}
+
+	/**
+	 * This method initializes txtCelular
+	 * 
+	 * @return javax.swing.JFormattedTextField
+	 */
+	private JFormattedTextField getTxtCelular() {
+		if (txtCelular == null) {
+			try {
+				txtCelular = new JFormattedTextField(new MaskFormatter(
+						"###-###-####"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			txtCelular.setBounds(new Rectangle(324, 68, 145, 25));
+			txtCelular
+					.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		}
+		return txtCelular;
+	}
+
+	/**
+	 * This method initializes txtTelefono
+	 * 
+	 * @return javax.swing.JFormattedTextField
+	 */
+	private JFormattedTextField getTxtTelefono() {
+		if (txtTelefono == null) {
+			try {
+				txtTelefono = new JFormattedTextField(new MaskFormatter(
+						"###-###-####"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			txtTelefono.setBounds(new Rectangle(324, 34, 145, 25));
+			txtTelefono.setBorder(BorderFactory
+					.createLineBorder(Color.black, 1));
+		}
+		return txtTelefono;
+	}
+
+	/**
+	 * This method initializes txtDireccion
+	 * 
+	 * @return javax.swing.JTextArea
+	 */
+	private JTextArea getTxtDireccion() {
+		if (txtDireccion == null) {
+			txtDireccion = new JTextArea();
+			txtDireccion.setBounds(new Rectangle(89, 150, 379, 131));
+			txtDireccion.setLineWrap(true);
+			txtDireccion.setWrapStyleWord(true);
+			txtDireccion.setBorder(BorderFactory.createLineBorder(Color.black,
+					1));
+		}
+		return txtDireccion;
+	}
+
+	/**
+	 * This method initializes panelSeguridad
+	 * 
+	 * @return javax.swing.JPanel
+	 */
+	private JPanel getPanelSeguridad() {
+		if (panelSeguridad == null) {
+			lblConfirmar = new JLabel();
+			lblConfirmar.setBounds(new Rectangle(19, 102, 98, 27));
+			lblConfirmar.setText("Confirmar Clave:");
+			lblClave = new JLabel();
+			lblClave.setBounds(new Rectangle(19, 66, 53, 27));
+			lblClave.setText("Clave:");
+			lblUsuario = new JLabel();
+			lblUsuario.setBounds(new Rectangle(19, 31, 62, 27));
+			lblUsuario.setText("Usuario:");
+			panelSeguridad = new JPanel();
+			panelSeguridad.setLayout(null);
+			panelSeguridad.setBounds(new Rectangle(13, 352, 484, 167));
+			panelSeguridad.setBorder(BorderFactory.createTitledBorder(
+					BorderFactory.createLineBorder(Color.black, 1),
+					"Seguridad", TitledBorder.DEFAULT_JUSTIFICATION,
+					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
+							Font.BOLD, 12), Color.black));
+			panelSeguridad.add(lblUsuario, null);
+			panelSeguridad.add(getTxtUsuario(), null);
+			panelSeguridad.add(getTxtClave(), null);
+			panelSeguridad.add(lblClave, null);
+			panelSeguridad.add(lblConfirmar, null);
+			panelSeguridad.add(getTxtConfirmarClave(), null);
+		}
+		return panelSeguridad;
 	}
 
 	/**
@@ -250,7 +406,9 @@ public class FormularioEditarDoctor extends JFrame {
 	private JTextField getTxtUsuario() {
 		if (txtUsuario == null) {
 			txtUsuario = new JTextField();
-			txtUsuario.setBounds(new Rectangle(144, 317, 182, 25));
+			txtUsuario.setBounds(new Rectangle(122, 31, 148, 27));
+			txtUsuario
+					.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		}
 		return txtUsuario;
 	}
@@ -263,7 +421,8 @@ public class FormularioEditarDoctor extends JFrame {
 	private JPasswordField getTxtClave() {
 		if (txtClave == null) {
 			txtClave = new JPasswordField();
-			txtClave.setBounds(new Rectangle(144, 361, 182, 25));
+			txtClave.setBounds(new Rectangle(122, 66, 148, 27));
+			txtClave.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		}
 		return txtClave;
 	}
@@ -276,7 +435,9 @@ public class FormularioEditarDoctor extends JFrame {
 	private JPasswordField getTxtConfirmarClave() {
 		if (txtConfirmarClave == null) {
 			txtConfirmarClave = new JPasswordField();
-			txtConfirmarClave.setBounds(new Rectangle(144, 407, 182, 25));
+			txtConfirmarClave.setBounds(new Rectangle(122, 102, 148, 27));
+			txtConfirmarClave.setBorder(BorderFactory.createLineBorder(
+					Color.black, 1));
 		}
 		return txtConfirmarClave;
 	}
@@ -288,14 +449,43 @@ public class FormularioEditarDoctor extends JFrame {
 	 */
 	private JButton getBtnAceptar() {
 		if (btnAceptar == null) {
-			btnAceptar = new JButton();
-			btnAceptar.setBounds(new Rectangle(117, 481, 91, 26));
+			ImageIcon aceptar = new ImageIcon("img/accept.png");
+			btnAceptar = new JButton(aceptar);
+			btnAceptar.setBounds(new Rectangle(170, 560, 85, 28));
 			btnAceptar.setText("Aceptar");
 			btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+				@SuppressWarnings("deprecation")
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					if (validarTexto()&& validarClave()) {
-						System.out.println("valode");
-					} 
+					if (validarTexto() && validarClave()) {
+						Doctor doctor = new Doctor();
+
+						doctor.setNombre(txtNombreDoctor.getText());
+						doctor.setApellido(txtApellido.getText());
+						doctor.setTelefono(txtTelefono.getText());
+						doctor.setCelular(txtCelular.getText());
+						doctor.setCedula(txtCedula.getText());
+						doctor.setDireccion(txtDireccion.getText());
+						doctor.setEspecialidad(cmbEspecialidad
+								.getSelectedItem().toString());
+						doctor.setStatus("Activo");
+						doctor.setRole("Doctor");
+						doctor.setUsuario(txtUsuario.getText());
+						doctor.setClave(txtClave.getText());
+
+						ModeloDoctor.getInstancia().modficar(doctor,
+								PanelDoctor.getIdDoctor());
+						limpiarCampos();
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Informacion",
+										"Se ha modificado un record Doctor exitosamente",
+										JOptionPane.INFORMATION_MESSAGE);
+
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Faltan Campos por llenar");
+					}
 				}
 			});
 		}
@@ -309,38 +499,47 @@ public class FormularioEditarDoctor extends JFrame {
 	 */
 	private JButton getBtnCancelar() {
 		if (btnCancelar == null) {
-			btnCancelar = new JButton();
-			btnCancelar.setBounds(new Rectangle(239, 481, 91, 26));
+			ImageIcon cancelar = new ImageIcon("img/cancelar.png");
+			btnCancelar = new JButton(cancelar);
+			btnCancelar.setBounds(new Rectangle(268, 560, 93, 28));
 			btnCancelar.setText("Cancelar");
+			btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					int opcion = JOptionPane
+							.showConfirmDialog(
+									null,
+									"La Ventana actual se cerrara ,Esta Seguro que desea cancelar ? ",
+									"Informacion", JOptionPane.YES_NO_OPTION);
+					if (opcion == JOptionPane.YES_OPTION) {
+						FormularioEditarDoctor.this.dispose();
+
+					}
+				}
+			});
 		}
 		return btnCancelar;
 	}
 
-	public boolean validarTexto() {
-		boolean validado = true;
-		if (txtNombreDoctor.getText().trim().equals("")
-				|| txtApellido.getText().trim().equals("")
-				|| txtTelefono.getText().trim().equals("")
-				|| txtCelular.getText().trim().equals("")
-				|| txtCedula.getText().equals("")
-				|| txtUsuario.getText().trim().equals("")
-				|| txtClave.getText().trim().equals("")
-				|| txtConfirmarClave.getText().trim().equals("")
-				|| cmbEspecialidad.getSelectedItem().equals("Seleccionar")) {
-			validado = false;
-			JOptionPane.showMessageDialog(null, "Faltan Campos por llenar");
-		}
-		return validado;
-	}
-	
-	public boolean validarClave(){
-		boolean validado = true;
-		
-		if(!txtClave.getText().trim().equals(txtConfirmarClave.getText().trim())){
-			validado = false;
-			JOptionPane.showMessageDialog(null, "Confirme su clave");
-		}
-		return validado;
-	}
+	public void llenarCampos(int id) {
+		ManejadorDoctor manejadorDoctor = ManejadorDoctor.getInstancia();
+		Doctor doctor = (Doctor) manejadorDoctor.getEntidad(id);
+		txtNombreDoctor.setText(doctor.getNombre());
+		txtApellido.setText(doctor.getApellido());
+		txtCedula.setText(doctor.getCedula());
+		txtTelefono.setText(doctor.getTelefono());
+		txtCelular.setText(doctor.getCelular());
+		txtDireccion.setText(doctor.getDireccion());
+		txtUsuario.setText(doctor.getUsuario());
+		txtClave.setText(doctor.getClave());
+		txtConfirmarClave.setText(doctor.getClave());
 
+		for (int i = 0; i < cmbEspecialidad.getItemCount(); i++) {
+			cmbEspecialidad.setSelectedIndex(i);
+			String especialidad = cmbEspecialidad.getSelectedItem().toString();
+			if (doctor.getEspecialidad().equals(especialidad)) {
+				return;
+			}
+		}
+
+	}
 } // @jve:decl-index=0:visual-constraint="10,-2"

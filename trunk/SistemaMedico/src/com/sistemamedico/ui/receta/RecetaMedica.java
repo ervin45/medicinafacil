@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import com.sistemamedico.entidades.Consulta;
 import com.toedter.calendar.JCalendar;
 
 public class RecetaMedica extends JFrame {
@@ -37,6 +38,7 @@ public class RecetaMedica extends JFrame {
 	private JTextArea txtDescripcion = null;
 	private JButton btnAceptar = null;
 	private JButton btnCancelar = null;
+
 	/**
 	 * This is the default constructor
 	 */
@@ -54,6 +56,7 @@ public class RecetaMedica extends JFrame {
 		this.setSize(533, 489);
 		this.setContentPane(getJContentPane());
 		this.setTitle("Consulta");
+		this.setLocationRelativeTo(null);
 		fecha = new Date();
 	}
 
@@ -246,29 +249,29 @@ public class RecetaMedica extends JFrame {
 			btnAceptar.setText("Aceptar");
 			btnAceptar.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					if(validarCampos()){
-						System.out.println("validado");
+					if (validarCampos()) {
+						
+						Consulta consulta = new Consulta();
+						//consulta.setIdConsulta(idConsulta)
+					
 					}
-																// Auto-generated
-																// Event stub
-																// actionPerformed()
 				}
 			});
 		}
 		return btnAceptar;
 	}
 
-	public boolean validarCampos(){
+	public boolean validarCampos() {
 		boolean validado = true;
-		
-		if(txtNombreDoctor.getText().equals("")
-		   ||txtNombrePaciente.getText().equals("")
-		   ||txtFecha.getText().equals("")
-		   ||txtDescripcion.getText().equals("")){
+
+		if (txtNombreDoctor.getText().equals("")
+				|| txtNombrePaciente.getText().equals("")
+				|| txtFecha.getText().equals("")
+				|| txtDescripcion.getText().equals("")) {
 			validado = false;
 			JOptionPane.showMessageDialog(null, "Faltan Campos por llenar");
 		}
-		
+
 		return validado;
 	}
 

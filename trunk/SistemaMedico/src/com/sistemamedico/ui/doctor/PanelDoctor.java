@@ -1,13 +1,13 @@
 package com.sistemamedico.ui.doctor;
 
-import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 
 import java.awt.Color;
-import java.awt.Dimension;
+
 import java.awt.Rectangle;
+
 import javax.swing.BorderFactory;
-import java.awt.SystemColor;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -16,13 +16,16 @@ import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import com.sistemamedico.manejadores.ManejadorDoctor;
 import com.sistemamedico.modelo.ModeloDoctor;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 
@@ -36,11 +39,12 @@ public class PanelDoctor extends JPanel {
 	private JButton btnAgregar = null;
 	private JButton btnModificar = null;
 	private JButton btnCambiarStatus = null;
-	private JButton btnBuscar = null;
 	private JLabel lblBusqueda = null;
 	private JComboBox cmbBusqueda = null;
 	private ComboBoxModel modeloComboBox = null;
 	private JTextField txtBusqueda = null;
+	private JPanel panelBusqueda = null;
+	private static int idDoctor = 0;
 
 	/**
 	 * This is the default constructor
@@ -59,19 +63,17 @@ public class PanelDoctor extends JPanel {
 		modeloComboBox = new DefaultComboBoxModel(new String[] { "Nombre",
 				"Apellido", "Especialidad" });
 		lblBusqueda = new JLabel();
-		lblBusqueda.setBounds(new Rectangle(152, 19, 66, 26));
 		lblBusqueda.setText("Busqueda:");
+		lblBusqueda.setBounds(new Rectangle(23, 17, 66, 25));
 		modeloDoctor = ModeloDoctor.getInstancia();
-		this.setSize(796, 411);
+		this.setSize(744, 420);
 		this.setLayout(null);
+
 		this.add(getPanelDoctor(), null);
 		this.add(getBtnAgregar(), null);
 		this.add(getBtnModificar(), null);
 		this.add(getBtnCambiarStatus(), null);
-		this.add(getBtnBuscar(), null);
-		this.add(lblBusqueda, null);
-		this.add(getCmbBusqueda(), null);
-		this.add(getTxtBusqueda(), null);
+		this.add(getPanelBusqueda(), null);
 	}
 
 	/**
@@ -83,13 +85,12 @@ public class PanelDoctor extends JPanel {
 		if (panelDoctor == null) {
 			panelDoctor = new JPanel();
 			panelDoctor.setLayout(null);
-			panelDoctor.setBounds(new Rectangle(48, 66, 679, 268));
+			panelDoctor.setBounds(new Rectangle(27, 91, 679, 268));
 			panelDoctor.setBorder(BorderFactory.createTitledBorder(
-					BorderFactory.createLineBorder(
-							SystemColor.activeCaptionText, 1),
+					BorderFactory.createLineBorder(Color.black, 1),
 					"Lista  Doctores", TitledBorder.DEFAULT_JUSTIFICATION,
 					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
-							Font.BOLD, 12), SystemColor.activeCaptionText));
+							Font.BOLD, 12), Color.black));
 			panelDoctor.add(getJspDoctores(), null);
 		}
 		return panelDoctor;
@@ -129,9 +130,18 @@ public class PanelDoctor extends JPanel {
 	 */
 	private JButton getBtnAgregar() {
 		if (btnAgregar == null) {
-			btnAgregar = new JButton();
-			btnAgregar.setBounds(new Rectangle(90, 345, 124, 36));
+			ImageIcon aceptar = new ImageIcon("img/agregar.png");
+			btnAgregar = new JButton(aceptar);
+			btnAgregar.setBounds(new Rectangle(183, 368, 107, 30));
 			btnAgregar.setText("Agregar");
+			btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					FormularioDoctor formulario = new FormularioDoctor();
+					formulario.setAlwaysOnTop(true);
+					formulario.setVisible(true);
+
+				}
+			});
 		}
 		return btnAgregar;
 	}
@@ -143,9 +153,28 @@ public class PanelDoctor extends JPanel {
 	 */
 	private JButton getBtnModificar() {
 		if (btnModificar == null) {
-			btnModificar = new JButton();
-			btnModificar.setBounds(new Rectangle(234, 346, 124, 32));
+			ImageIcon edit = new ImageIcon("img/edit.png");
+			btnModificar = new JButton(edit);
+			btnModificar.setBounds(new Rectangle(298, 368, 107, 30));
 			btnModificar.setText("Modificar");
+			btnModificar.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					if (tblDoctores.isRowSelected(tblDoctores.getSelectedRow()) == false) {
+
+						JOptionPane.showMessageDialog(null,
+								"Debe de seleccionar un Doctor para modificar",
+								"Error", JOptionPane.ERROR_MESSAGE);
+					} else {
+						String idDoctor = tblDoctores.getValueAt(
+								tblDoctores.getSelectedRow(), 0).toString();
+
+						setIdDoctor(Integer.valueOf(idDoctor));
+						FormularioEditarDoctor formularioEditarDoctor = new FormularioEditarDoctor();
+						formularioEditarDoctor.setAlwaysOnTop(true);
+						formularioEditarDoctor.setVisible(true);
+					}
+				}
+			});
 		}
 		return btnModificar;
 	}
@@ -157,25 +186,51 @@ public class PanelDoctor extends JPanel {
 	 */
 	private JButton getBtnCambiarStatus() {
 		if (btnCambiarStatus == null) {
-			btnCambiarStatus = new JButton();
-			btnCambiarStatus.setBounds(new Rectangle(371, 350, 178, 24));
+			ImageIcon change = new ImageIcon("img/change.png");
+			btnCambiarStatus = new JButton(change);
+			btnCambiarStatus.setBounds(new Rectangle(416, 368, 169, 30));
 			btnCambiarStatus.setText("Cambiar Estatus");
+			btnCambiarStatus
+					.addActionListener(new java.awt.event.ActionListener() {
+						public void actionPerformed(java.awt.event.ActionEvent e) {
+
+							if (tblDoctores.isRowSelected(tblDoctores
+									.getSelectedRow()) == false) {
+
+								JOptionPane
+										.showMessageDialog(
+												null,
+												"Debe de seleccionar un Doctor para cambiar el status",
+												"Error",
+												JOptionPane.ERROR_MESSAGE);
+							} else {
+
+								String idDoctor = tblDoctores.getValueAt(
+										tblDoctores.getSelectedRow(), 0)
+										.toString();
+
+								int option = JOptionPane
+										.showConfirmDialog(
+												null,
+												
+												"Esta seguro que desea cambiarle el status a este Doctor ?",
+												"Informacion",
+												JOptionPane.YES_OPTION);
+								if (option == JOptionPane.YES_OPTION) {
+
+									ManejadorDoctor.getInstancia()
+											.cambiarStatus(
+													Integer.parseInt(idDoctor));
+									
+									ModeloDoctor.getInstancia().actualizarTabla();
+								}
+
+							}
+
+						}
+					});
 		}
 		return btnCambiarStatus;
-	}
-
-	/**
-	 * This method initializes btnBuscar
-	 * 
-	 * @return javax.swing.JButton
-	 */
-	private JButton getBtnBuscar() {
-		if (btnBuscar == null) {
-			btnBuscar = new JButton();
-			btnBuscar.setBounds(new Rectangle(571, 17, 77, 29));
-			btnBuscar.setText("Buscar");
-		}
-		return btnBuscar;
 	}
 
 	/**
@@ -186,8 +241,8 @@ public class PanelDoctor extends JPanel {
 	private JComboBox getCmbBusqueda() {
 		if (cmbBusqueda == null) {
 			cmbBusqueda = new JComboBox();
+			cmbBusqueda.setBounds(new Rectangle(97, 17, 86, 25));
 			cmbBusqueda.setModel(modeloComboBox);
-			cmbBusqueda.setBounds(new Rectangle(223, 14, 134, 30));
 		}
 		return cmbBusqueda;
 	}
@@ -200,9 +255,9 @@ public class PanelDoctor extends JPanel {
 	private JTextField getTxtBusqueda() {
 		if (txtBusqueda == null) {
 			txtBusqueda = new JTextField();
-			txtBusqueda.setBounds(new Rectangle(365, 11, 194, 37));
 			txtBusqueda.setBorder((BorderFactory.createLineBorder(Color.black,
 					1)));
+			txtBusqueda.setBounds(new Rectangle(189, 17, 162, 25));
 			txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
 				public void keyTyped(java.awt.event.KeyEvent e) {
 
@@ -234,4 +289,34 @@ public class PanelDoctor extends JPanel {
 		return txtBusqueda;
 	}
 
-} // @jve:decl-index=0:visual-constraint="10,10"
+	/**
+	 * This method initializes panelBusqueda
+	 * 
+	 * @return javax.swing.JPanel
+	 */
+	private JPanel getPanelBusqueda() {
+		if (panelBusqueda == null) {
+			panelBusqueda = new JPanel();
+			panelBusqueda.setLayout(null);
+			panelBusqueda.setBounds(new Rectangle(181, 26, 361, 56));
+			panelBusqueda.setBorder(BorderFactory.createTitledBorder(
+					BorderFactory.createLineBorder(Color.black, 1), "Busqueda",
+					TitledBorder.DEFAULT_JUSTIFICATION,
+					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
+							Font.BOLD, 12), Color.black));
+			panelBusqueda.add(lblBusqueda, null);
+			panelBusqueda.add(getCmbBusqueda(), null);
+			panelBusqueda.add(getTxtBusqueda(), null);
+		}
+		return panelBusqueda;
+	}
+
+	public static int getIdDoctor() {
+		return idDoctor;
+	}
+
+	public static void setIdDoctor(int idDoctor) {
+		PanelDoctor.idDoctor = idDoctor;
+	}
+
+} // @jve:decl-index=0:visual-constraint="20,10"
