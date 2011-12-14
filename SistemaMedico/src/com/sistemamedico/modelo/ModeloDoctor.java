@@ -10,6 +10,10 @@ import com.sistemamedico.manejadores.ManejadorDoctor;
 
 public class ModeloDoctor extends AbstractTableModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ManejadorDoctor manejadorDoctor = null;
 	private String[] encabezados = null;
 	private List<IEntidad> doctores = null;
@@ -110,6 +114,11 @@ public class ModeloDoctor extends AbstractTableModel {
 
 	public void modficar(Doctor entidad, int id) {
 		manejadorDoctor.modificar(id, entidad);
+		doctores = manejadorDoctor.getEntidades();
+		fireTableDataChanged();
+	}
+
+	public void actualizarTabla() {
 		doctores = manejadorDoctor.getEntidades();
 		fireTableDataChanged();
 	}
